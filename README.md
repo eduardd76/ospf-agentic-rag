@@ -75,7 +75,7 @@ You can add more entries for other issues like:
 ## 👤 About the Author
 
 Created by [Eduard Dulharu](https://www.linkedin.com/in/eduarddulharu)  
-Senior Network Architect | AI in Networking Advocate | CTO @ Brilu
+Senior Network Architect | AI in Networking Advocate 
 
 ---
 
