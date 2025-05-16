@@ -72,20 +72,6 @@ You can add more entries for other issues like:
 
 ---
 
-## 🛠 Extending the App
-
-Ideas to expand this project:
-
-| Feature | Description |
-|---------|-------------|
-| 🔄 Add BGP, EIGRP     | Extend troubleshooting for other protocols |
-| 🧰 Local LLM          | Use Llama.cpp or GPT4All with LangChain |
-| 📦 Containerization   | Deploy in Docker or on Kubernetes |
-| 🔌 Kafka integration  | Real-time log ingestion for NOC environments |
-| 🤝 REST API mode      | Make the app callable from other systems |
-
----
-
 ## 👤 About the Author
 
 Created by [Eduard Dulharu](https://www.linkedin.com/in/eduarddulharu)  
