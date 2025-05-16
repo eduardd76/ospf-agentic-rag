@@ -1,0 +1,7 @@
+chainlit
+langchain
+gpt4all
+openai
+faiss-cpu
+langchain-community
+langgraph

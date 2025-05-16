@@ -1,0 +1,135 @@
+
+# OSPF Troubleshooting Guide - Expert Edition
+
+## 1. MTU Mismatch
+
+**Symptoms:**
+- OSPF neighbors stuck in EXSTART/EXCHANGE state.
+- Log message: `%OSPF-5-ADJCHG: from EXCHANGE to EXSTART, Seq Number Mismatch`.
+
+**Causes:**
+- Mismatched MTU between adjacent interfaces.
+- Tunnel overhead not accounted for.
+- Misconfigured subinterfaces.
+
+**Solutions:**
+1. Check MTU: `show interfaces <int>`
+2. Align MTU across interfaces or use `ip ospf mtu-ignore`
+3. Avoid mtu-ignore in production; better to align physical settings.
+
+---
+
+## 2. Authentication Mismatch
+
+**Symptoms:**
+- Neighbors stuck in INIT or 2-WAY state.
+- Log: `OSPF-4-AUTHFAIL`.
+
+**Causes:**
+- Different authentication types (null, simple, MD5).
+- Incorrect keys or key IDs.
+
+**Solutions:**
+1. Match `ip ospf authentication` and keys on both sides.
+2. Use MD5 for better security.
+3. Debug with: `debug ip ospf adj` and `debug ip ospf packet`.
+
+---
+
+## 3. Hello/Dead Timer Mismatch
+
+**Symptoms:**
+- Neighbors not forming adjacency.
+- Log: `OSPF: mismatched hello parameters`.
+
+**Causes:**
+- Hello/Dead interval mismatch.
+- Manual config or interface type differences.
+
+**Solutions:**
+1. Check: `show ip ospf interface <int>`
+2. Align hello/dead timers: `ip ospf hello-interval X` and `ip ospf dead-interval Y`
+
+---
+
+## 4. Network Type Mismatch
+
+**Symptoms:**
+- Neighbors stuck in 2-WAY or never form full adjacency.
+
+**Causes:**
+- One side configured as broadcast, other as point-to-point or NBMA.
+
+**Solutions:**
+1. Check: `show ip ospf interface`
+2. Set consistent network types: `ip ospf network <type>`
+
+---
+
+## 5. OSPF Area Type Mismatch
+
+**Symptoms:**
+- Routes not exchanged between routers in the same area.
+
+**Causes:**
+- One router is in a stub area, the other is not.
+- Improper ABR configuration.
+
+**Solutions:**
+1. Use `show ip ospf` and `show ip ospf database`
+2. Align area types and use `area <x> stub` consistently
+
+---
+
+## 6. Missing or Blocked Interfaces
+
+**Symptoms:**
+- OSPF not seeing neighbor.
+- `show ip ospf neighbor` empty.
+
+**Causes:**
+- Passive interfaces
+- ACLs blocking OSPF (protocol 89)
+- Wrong IP subnet or mask
+
+**Solutions:**
+1. Check: `show run | section ospf`
+2. Remove passive config or permit OSPF in ACLs
+3. Ensure interfaces share same subnet
+
+---
+
+## 7. Router ID Conflicts
+
+**Symptoms:**
+- Instability or incorrect LSAs
+
+**Causes:**
+- Two routers have same router-id (manual config or loopbacks)
+
+**Solutions:**
+1. Check with: `show ip ospf`
+2. Set unique ID using: `router-id <A.B.C.D>`
+
+---
+
+## Useful Commands
+
+```
+show ip ospf neighbor
+show ip ospf interface <int>
+debug ip ospf adj
+debug ip ospf hello
+debug ip ospf packet
+```
+
+---
+
+## Best Practices
+
+- Always align MTU and timers
+- Use authentication in production
+- Prefer loopback interfaces for stability
+- Avoid `mtu-ignore` unless strictly required
+- Use router-id manually for predictability
+
